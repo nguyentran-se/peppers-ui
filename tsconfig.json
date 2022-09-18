@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "dist",
+    "module": "ES6",
+    "target": "ES5",
+    "lib": ["ES2015", "DOM", "ES2016", "ES2017"],
+    // "sourceMap": true, //not work in webpack (webpack has higher priority)
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    // "emitDeclarationOnly": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "allowJs": false,
+    "forceConsistentCasingInFileNames": true,
+    // "isolatedModules": true,
+    "removeComments": true
+    // "outFile": "dist/declarations/index.d.ts"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "build", "src/utils", "src/__test__", "src/stories"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "resolveJsonModule": true
+    }
+  }
+}
