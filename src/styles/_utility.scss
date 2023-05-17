@@ -1,0 +1,70 @@
+@use './variables' as v;
+/* #region 'Margin-Padding' */
+$directions: ('', 'l', 'r', 't', 'b');
+$margin-map: (
+  '': margin,
+  'l': margin-left,
+  'r': margin-right,
+  't': margin-top,
+  'b': margin-bottom,
+);
+$padding-map: (
+  '': padding,
+  'l': padding-left,
+  'r': padding-right,
+  't': padding-top,
+  'b': padding-bottom,
+);
+$spacing: (0, 1, 2, 3, 4, 5, 6, 7, 8, auto);
+
+@each $d in $directions {
+  @each $s in $spacing {
+    .m#{$d}-#{$s} {
+      @if ($s == auto) {
+        #{map-get($margin-map, $d)}: auto;
+      } @else {
+        #{map-get($margin-map, $d)}: #{$s * 8}px;
+      }
+    }
+
+    .p#{$d}-#{$s} {
+      @if ($s) != auto {
+        #{map-get($padding-map, $d)}: #{$s * 8}px;
+      }
+    }
+  }
+}
+/* #endregion 'Margin-Padding' */
+
+$colors: (
+  // 'inherit',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'info',
+  'warning'
+);
+$color-map: (
+  // 'inherit': inherit,
+  'primary': v.$primary,
+  'secondary': v.$secondary,
+  'success': v.$success-color,
+  'error': v.$error-color,
+  'info': v.$info-color,
+  'warning': v.$warning-color
+);
+$hover-color-map: (
+  // 'inherit': inherit,
+  'primary': v.$primary-hover,
+  'secondary': v.$secondary-hover,
+  'success': v.$success-hover,
+  'error': v.$error-hover,
+  'info': v.$info-hover,
+  'warning': v.$warning-hover
+);
+@each $c in $colors {
+  .color-#{$c} {
+    color: #{map-get($color-map, $c)};
+  }
+}

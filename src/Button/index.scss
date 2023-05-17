@@ -1,3 +1,211 @@
-.peppers-btn {
-  background-color: pink;
+@use 'styles/variables' as v;
+@use 'styles/utility' as u;
+/* #region 'COMMON BUTTON VARIABLES' */
+$mw: 64px;
+$br: 4px;
+
+$line-height: 1.75;
+$letter-spacing: 0.02857em;
+
+$box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px,
+  rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+$box-shadow-hover: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%),
+  0px 1px 10px 0px rgb(0 0 0 / 12%);
+/* #endregion 'COMMON BUTTON VARIABLES' */
+
+@mixin BaseBtn {
+  box-sizing: border-box;
+  min-width: $mw;
+  border: 0;
+  outline: 0;
+  border-radius: $br;
+
+  font-weight: 500;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
+
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
+
+.peppers-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @include BaseBtn();
+}
+
+/* #region 'VARIANT' */
+.peppers-btn {
+  &:active {
+    transform: translateY(1px);
+  }
+  &--contained {
+    color: v.$white;
+    box-shadow: $box-shadow;
+
+    &:hover {
+      box-shadow: $box-shadow-hover;
+    }
+  }
+
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid;
+  }
+
+  &--text {
+    background-color: transparent;
+    border: 0;
+  }
+}
+/* #endregion 'VARIANT' */
+
+/* #region 'SIZE' */
+$btn-sizes: ('small', 'medium', 'large');
+$btn-size-map: (
+  small: 0,
+  medium: 1,
+  large: 2,
+);
+
+@mixin BtnSize($size: 1, $subtraction: 0px) {
+  $fz: 0.875rem;
+  $p: 6px 16px;
+
+  $icon-fz: 20px;
+  $icon-margin: -4px;
+
+  @if $size == 0 {
+    $fz: 0.8125rem;
+    $p: 4px 10px;
+    $icon-fz: 18px;
+    $icon-margin: -2px;
+  }
+  @if $size == 2 {
+    $fz: 0.9375rem;
+    $p: 8px 22px;
+    $icon-fz: 22px;
+  }
+  font-size: $fz;
+  padding: nth($p, 1) - $subtraction nth($p, 2) - $subtraction;
+  /* ICON SIZE*/
+  .peppers-btn {
+    &--startIcon {
+      margin-left: $icon-margin;
+    }
+    &--endIcon {
+      margin-right: $icon-margin;
+    }
+    &--startIcon,
+    &--endIcon {
+      & > *:nth-of-type(1) {
+        font-size: $icon-fz;
+      }
+    }
+  }
+}
+/*ICON SPACING*/
+.peppers-btn {
+  &--startIcon {
+    margin-right: 8px;
+  }
+  &--endIcon {
+    margin-left: 8px;
+  }
+  &--startIcon,
+  &--endIcon {
+    display: inherit;
+  }
+}
+
+@each $bs in $btn-sizes {
+  .peppers-btn--#{$bs} {
+    $size: map-get($btn-size-map, $bs);
+    @include BtnSize($size);
+    &.peppers-btn--outlined {
+      @include BtnSize($size, 1px);
+    }
+  }
+}
+/* #endregion 'SIZE' */
+
+/* #region 'DISABLED' */
+$disabled-color: rgba(v.$black, 0.26);
+$disabled-bg: rgba(v.$black, 0.12);
+.peppers-btn {
+  &.peppers-btn--disabled {
+    color: $disabled-color !important;
+    background-color: transparent;
+    box-shadow: none;
+    cursor: default;
+    pointer-events: none;
+    &.peppers-btn--contained {
+      background-color: $disabled-bg;
+    }
+    &.peppers-btn--outlined {
+      border: 1px solid $disabled-bg;
+    }
+    // &.peppers-btn--text {
+    // }
+  }
+}
+/* #endregion 'DISABLED' */
+
+/* #region 'COLOR' */
+.peppers-btn {
+  &--contained {
+    @each $c in u.$colors {
+      $current-color: map-get(u.$color-map, $c);
+      $current-hover-color: map-get(u.$hover-color-map, $c);
+
+      &.peppers-btn--#{$c} {
+        background-color: #{$current-color};
+        &:hover {
+          background-color: #{$current-hover-color};
+        }
+      }
+    }
+  }
+  &--outlined {
+    @each $c in u.$colors {
+      $current-color: map-get(u.$color-map, $c);
+      $current-hover-color: map-get(u.$hover-color-map, $c);
+
+      &.peppers-btn--#{$c} {
+        color: #{$current-color};
+        border-color: rgba($current-color, 0.5);
+        &:hover {
+          background-color: rgba($current-hover-color, 0.04);
+          border-color: #{$current-hover-color};
+        }
+      }
+    }
+  }
+  &--text {
+    @each $c in u.$colors {
+      $current-color: map-get(u.$color-map, $c);
+      $current-hover-color: map-get(u.$hover-color-map, $c);
+
+      &.peppers-btn--#{$c} {
+        color: #{$current-color};
+        &:hover {
+          background-color: rgba($current-hover-color, 0.04);
+        }
+      }
+    }
+  }
+}
+.peppers-btn--inherit {
+  color: inherit;
+  background-color: inherit;
+}
+/* #endregion 'COLOR' */

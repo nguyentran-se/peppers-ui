@@ -45,24 +45,45 @@ const config: webpack.Configuration = {
         type: 'module',
       },
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...(generateComponentFileEntry(ModuleType.CJS) as any),
+    ...(generateComponentFileEntry(ModuleType.CJS) as object),
     'esm/index': {
       import: '/src/index.ts',
       library: {
         type: 'commonjs',
       },
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...(generateComponentFileEntry(ModuleType.ESM) as any),
+    ...(generateComponentFileEntry(ModuleType.ESM) as object),
+    /* CSS */
+    utility: {
+      import: '/src/styles/_index.scss',
+    },
   },
-  // target: 'web',
   output: {
     path: path.resolve(__dirname, 'ui'),
     filename: '[name].js',
     // library: ['@peppers/ui'],
     // libraryTarget: 'umd',
+    libraryTarget: 'module',
+
     clean: true,
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        peppers: {
+          name: 'peppers',
+          type: 'css/mini-extract',
+          chunks: (chunk) => chunk.name !== 'utility',
+          enforce: true,
+        },
+        utility: {
+          name: 'utility',
+          type: 'css/mini-extract',
+          chunks: (chunk) => chunk.name === 'utility',
+          enforce: true,
+        },
+      },
+    },
   },
   module: {
     rules: [

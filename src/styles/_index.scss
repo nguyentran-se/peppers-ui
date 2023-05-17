@@ -1,0 +1,18 @@
+@use './utility';
+@use './variables';
+@use './reset';
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+img {
+  display: block;
+  width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+}

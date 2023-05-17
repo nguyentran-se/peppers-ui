@@ -1,0 +1,54 @@
+$drawer-width: 240px;
+$drawer-height: 100vh;
+
+.peppers-drawerWrapper {
+  position: relative;
+  width: $drawer-width;
+  height: $drawer-height;
+}
+
+.peppers-drawer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  width: $drawer-width;
+  height: $drawer-height;
+
+  background-color: pink;
+}
+
+.peppers-logo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  & img,
+  svg {
+    width: 60px;
+    object-fit: cover;
+  }
+}
+
+.peppers-drawerHeader {
+  width: 100%;
+  height: 80px;
+  // border: 1px solid red;
+}
+
+.peppers-drawerBody {
+  width: 100%;
+  flex: 1 0 auto;
+  // border: 1px solid green;
+}
+
+.peppers-drawerFooter {
+  width: 100%;
+  height: 70px;
+  // border: 1px solid yellow;
+}

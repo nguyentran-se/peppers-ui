@@ -59,14 +59,36 @@ const config: webpack.Configuration = {
       },
     },
     ...(generateComponentFileEntry(ModuleType.ESM) as object),
+    /* CSS */
+    utility: {
+      import: '/src/styles/_index.scss',
+    },
   },
-  // target: 'web',
   output: {
     path: path.resolve(__dirname, PUBLIC_DIST),
     filename: '[name].js',
     // library: ['@peppers/ui'],
     // libraryTarget: 'umd',
+    // libraryTarget: 'module',
     clean: true,
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        peppers: {
+          name: 'peppers',
+          type: 'css/mini-extract',
+          chunks: (chunk) => chunk.name !== 'utility',
+          enforce: true,
+        },
+        utility: {
+          name: 'utility',
+          type: 'css/mini-extract',
+          chunks: (chunk) => chunk.name === 'utility',
+          enforce: true,
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -125,18 +147,21 @@ const config: webpack.Configuration = {
             `${PUBLIC_DIST}/types`,
             `${PUBLIC_DIST}/**/*.LICENSE.txt`,
             `${PUBLIC_DIST}/**/*.stories.d.ts`,
-            `${PUBLIC_DIST}/*/*.css`,
-            `${PUBLIC_DIST}/cjs/*/*.css`,
+            // `${PUBLIC_DIST}/*/*.css`,
+            // `${PUBLIC_DIST}/cjs/*/*.css`,
           ],
         },
       },
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: 'styles/[name].css',
+      ignoreOrder: true,
     }),
   ],
-
   devtool: 'source-map',
+  stats: {
+    errorDetails: true,
+  },
 };
 
 export default config;

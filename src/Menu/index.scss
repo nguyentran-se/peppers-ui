@@ -1,0 +1,41 @@
+@use 'styles/variables' as v;
+$shadow-1: rgba(0, 0, 0, 0.1);
+$shadow-2: rgba(0, 0, 0, 0.2);
+$card-box-shadow: 0 12px 28px 0 $shadow-2, 0 2px 4px 0 $shadow-1;
+$card-corner-radius: 8px;
+.peppers-menu {
+}
+
+.peppers-menuButton {
+}
+
+.peppers-menuList {
+  position: fixed;
+  box-shadow: $card-box-shadow;
+  border-radius: $card-corner-radius;
+  background-color: v.$white;
+  padding: 8px;
+}
+/*TODO: Find another way to handle menuItem*/
+.peppers-menuItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  & svg {
+    font-size: 20px;
+    color: v.$primary;
+    margin-right: 8px;
+  }
+  & a {
+    display: flex;
+    align-items: center;
+  }
+  & > *:not(svg) {
+    width: 100%;
+  }
+}

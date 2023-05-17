@@ -1,0 +1,25 @@
+$btn-sizes: ('small', 'medium', 'large');
+$btn-size-map: (
+  small: 0,
+  medium: 1,
+  large: 2,
+);
+
+@mixin BtnSize($size: 1, $subtraction: 0px) {
+  $fz: 0.875rem;
+  $p: 6px 16px;
+
+  @if $size == 0 {
+    $fz: 0.8125rem;
+    $p: 4px 10px;
+  }
+  @if $size == 2 {
+    $fz: 0.9375rem;
+    $p: 8px 22px;
+  }
+  font-size: $fz;
+  padding: nth($p, 1) - $subtraction nth($p, 2) - $subtraction;
+}
+.peppers-icon {
+  display: inherit;
+}

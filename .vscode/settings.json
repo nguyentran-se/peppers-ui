@@ -1,0 +1,7 @@
+{
+  "prettier.printWidth": 110,
+  "editor.formatOnSave": true,
+  "jest.autoRun": {
+    "onStartup": []
+  }
+}

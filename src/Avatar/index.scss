@@ -1,0 +1,45 @@
+.peppers-avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  transition: all 200ms ease;
+
+  overflow: hidden;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.peppers-avatarImage {
+  border-radius: inherit;
+}
+
+.peppers-avatar {
+  &--large {
+    $l: 56px;
+    width: $l;
+    height: $l;
+  }
+  &--medium {
+    $m: 40px;
+    width: $m;
+    height: $m;
+  }
+  &--small {
+    $s: 32px;
+    width: $s;
+    height: $s;
+  }
+}
+.peppers-avatarString {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: inherit;
+  height: inherit;
+
+  border-radius: inherit;
+}
